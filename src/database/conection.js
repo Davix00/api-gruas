@@ -1,5 +1,5 @@
 import sql from 'mssql'
-import {config} from 'dotenv'
+import { config } from 'dotenv'
 config()
 
 const dbsettings = {
@@ -12,7 +12,7 @@ const dbsettings = {
     },
 };
 
-async function getConecttion(){
+export async function getConection(){
     try {
         const pool = await sql.connect(dbsettings)
         return pool;
@@ -21,4 +21,4 @@ async function getConecttion(){
     }
 }
 
-getConecttion()
+export { sql };
