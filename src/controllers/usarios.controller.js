@@ -1,31 +1,29 @@
-import { response } from 'express';
 import { getConection, sql} from '../database/conection'
 import {HTTP_STATUS, MESSAGES} from '../database/status'
 
 
 //querys
 export const getUsuarios = async (req, res) => {
-  try {
-    const pool = await getConection();
-    const result = await pool.request()
-      .query('SELECT u.idUsuario, u.nombre, u.apellido, u.nombreDeUsuario, u.contrasena, ut.nombre AS tipo FROM usuario AS u LEFT JOIN usuario_tipo AS ut ON u.idUsuarioTipo = ut.idUsuarioTipo;');
+    try {
+        const pool = await getConection();
 
-    return res.status(HTTP_STATUS.SUCCESS).json({ msg: MESSAGES.SUCCESS, content: result.recordset });
-  } catch (error) {
-    if (error.code === 'EREQUEST') {
-      return res.status(HTTP_STATUS.DATABASE_ERROR).json({ msg: MESSAGES.DATABASE_ERROR, error });
+        const result = await pool.request()
+        .query('SELECT u.idUsuario, u.nombre, u.apellido, u.nombreDeUsuario, u.contrasena, ut.nombre AS tipo FROM usuario AS u LEFT JOIN usuario_tipo AS ut ON u.idUsuarioTipo = ut.idUsuarioTipo;');
+        if (result.recordset){
+            return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset});
+        }
+        return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: ''});
+    } catch (error) {
+        return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR, error});
     }
-    return res.status(HTTP_STATUS.NOT_FOUND).json({ msg: MESSAGES.NOT_FOUND, error });
-  }
 };
 
-export const newUsuario = async (req, res) => {
-    const { idUsuarioTipo, nombre, apellido, nombreDeUsuario, contrasena } =  req.body
+export const createUsuario = async (req, res) => {
+    const { idUsuarioTipo, nombre, apellido, nombreDeUsuario, contrasena } =  req.body;
 
     if (idUsuarioTipo && nombre && apellido && nombreDeUsuario && contrasena) {
-        let pool;
         try {
-            pool = await getConection();
+            const pool = await getConection();
 
             await pool.request()
             .input('idUsuarioTipo',sql.Int,idUsuarioTipo)
@@ -42,27 +40,83 @@ export const newUsuario = async (req, res) => {
     } else {
         return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST});
     }     
-}
+};
 
 export const getUsuarioById = async (req, res) => {
-    const { idUsuario } =  req.params
+    const { idUsuario } =  req.params;
     if(idUsuario){
-        let pool;
         try {
-            pool = await getConection();
+            const pool = await getConection();
 
             const result = await pool.request()
             .input('idUsuario',sql.Int,idUsuario)
             .query('SELECT u.idUsuario, u.nombre, u.apellido, u.nombreDeUsuario, u.contrasena, ut.nombre AS tipo FROM usuario AS u LEFT JOIN usuario_tipo AS ut ON u.idUsuarioTipo = ut.idUsuarioTipo WHERE idUsuario = @idUsuario;');
-
-            return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset[0]});   
-        } catch (error) {
-            if (error.code === 'EREQUEST') {
-                return res.status(HTTP_STATUS.DATABASE_ERROR).json({ msg: MESSAGES.DATABASE_ERROR, error });
+            if(result.recordset[0]){
+                return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset[0]});   
             }
-            return res.status(HTTP_STATUS.NOT_FOUND).json({ msg: MESSAGES.NOT_FOUND, error });
+            return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: ''});   
+        } catch (error) {
+            return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR, error});
         }
     } else {
         return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST});
     }
-}
+};
+
+export const deleteUsuario = async (req,res) => {
+    const { idUsuario } =  req.params;
+    if(idUsuario){
+        try {
+            const pool = await getConection();
+
+            await pool.request()
+            .input('idUsuario',sql.Int,idUsuario)
+            .query('DELETE FROM usuario WHERE idUsuario = @idUsuario;');
+            return res.status(HTTP_STATUS.DELETE_SUCCES);   
+        } catch (error) {
+            return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR, error});
+        }
+    } else {
+        return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST});
+    }
+};
+
+export const countUsuarios = async (req, res) => {
+
+    try {
+        const pool = await getConection();
+        const result = await pool.request()
+        .query('SELECT COUNT(*) as usuarios_totales FROM usuario;');
+        if (result.recordset){
+            return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset[0]});
+        }
+        return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: ''});
+    } catch (error) {
+          return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR, error});
+    }
+};
+
+export const updateUsuarioById = async (req, res) => {
+    const { idUsuarioTipo, nombre, apellido, nombreDeUsuario, contrasena } =  req.body;
+    const { idUsuario } = req.params;
+    if (idUsuarioTipo && nombre && apellido && nombreDeUsuario && contrasena && idUsuario) {
+        try {
+            const pool = await getConection();
+
+            await pool.request()
+            .input('idUsuarioTipo', sql.Int, idUsuarioTipo)
+            .input('nombre', sql.VarChar, nombre)
+            .input('apellido', sql.VarChar, apellido)
+            .input('nombreDeUsuario', sql.VarChar, nombreDeUsuario)
+            .input('contrasena', sql.VarChar, contrasena)
+            .input('idUsuario', sql.Int, idUsuario)
+            .query('UPDATE usuario SET idUsuarioTipo = @idUsuarioTipo, nombre = @nombre, apellido = @apellido, nombreDeUsuario = @nombreDeUsuario, contrasena = @contrasena WHERE idUsuario = @idUsuario;');
+            
+            return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});
+        } catch (error) {
+            return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR,error});
+        }
+    } else {
+        return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST});
+    } 
+};

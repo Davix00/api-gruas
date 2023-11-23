@@ -1,12 +1,11 @@
 import sql from 'mssql'
-import { config } from 'dotenv'
-config()
+import config from '../config';
 
 const dbsettings = {
-    user: process.env.user,
-    password: process.env.password,
-    server: process.env.server,
-    database: process.env.database,
+    user: config.dbUser,
+    password: config.dbPassword,
+    server: config.dbServer,
+    database: config.dbName,
     options: {
         trustServerCertificate: true,
     },
