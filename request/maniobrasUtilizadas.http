@@ -1,0 +1,31 @@
+### LINK DE LA API DE MANIOBRA
+@api = http://localhost:3001/maniobrasu
+
+### LISTAR
+GET {{api}}/get
+
+### CREAR
+POST {{api}}/create
+Content-Type: application/json
+
+{
+    "idManiobra": 2,
+    "idSiniestro": 1,
+    "idVehiculo": 1
+}
+
+### LISTAR POR ID
+GET {{api}}/getbid/1
+
+### ELIMINAR POR ID
+DELETE {{api}}/delete/2
+
+### EDITAR
+PUT {{api}}/update/1
+Content-Type: application/json
+
+{
+    "idManiobra": 4,
+    "idSiniestro": 1,
+    "idVehiculo": 1
+}

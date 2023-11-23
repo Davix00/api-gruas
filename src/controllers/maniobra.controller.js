@@ -1,7 +1,7 @@
 import { getConection, sql } from "../database/conection";
 import { HTTP_STATUS, MESSAGES } from "../database/status";
 
-export const getManiobra = async (req,res) => {
+export const getManiobras = async (req,res) => {
     try {
         const pool = await getConection();
 
