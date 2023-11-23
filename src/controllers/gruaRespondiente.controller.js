@@ -6,7 +6,7 @@ export const getGruasRespondientes = async (req,res) => {
         const pool = await getConection();
 
         const result = await pool.request()
-        .query('SELECT gr.idGrua, g.matricula, gr.idSiniestro, s.folio FROM gruas_respondientes AS gr LEFT JOIN grua AS g ON gr.idGrua = g.idGrua LEFT JOIN siniestro AS s ON gr.idSiniestro = s.idSiniestro');
+        .query('SELECT gr.id, gr.idGrua, g.matricula as matricula_grua, gr.idSiniestro, s.folio as folio_siniestro FROM gruas_respondientes AS gr LEFT JOIN grua AS g ON gr.idGrua = g.idGrua LEFT JOIN siniestro AS s ON gr.idSiniestro = s.idSiniestro');
 
         if (result.recordset){
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset});
@@ -18,22 +18,16 @@ export const getGruasRespondientes = async (req,res) => {
     }
 }
 
-export const createCorralon = async (req,res) => {
-    const { idRegion, razonSocial, direccion, latitud, longitud, diasHabiles, responsable, telefono } = req.body;
-    if (idRegion && razonSocial && direccion && latitud && longitud && diasHabiles && responsable && telefono) {
+export const createGruaRespondiente = async (req,res) => {
+    const {  idGrua, idSiniestro } = req.body;
+    if (idGrua && idSiniestro) {
         try {
             const pool = await getConection();
 
             await pool.request()
-            .input('idRegion', sql.Int, idRegion)
-            .input('razonSocial', sql.VarChar, razonSocial)
-            .input('direccion', sql.VarChar, direccion)
-            .input('latitud', sql.VarChar, latitud)
-            .input('longitud', sql.VarChar, longitud)
-            .input('diasHabiles', sql.VarChar, diasHabiles)
-            .input('responsable', sql.VarChar, responsable)
-            .input('telefono', sql.VarChar, telefono)
-            .query('INSERT INTO corralon (idRegion, razonSocial, direccion, latitud, longitud, diasHabiles, responsable, telefono) VALUES (@idRegion, @razonSocial, @direccion, @latitud, @longitud, @diasHabiles, @responsable, @telefono);');
+            .input('idGrua', sql.Int, idGrua)
+            .input('idSiniestro', sql.Int, idSiniestro)
+            .query('INSERT INTO gruas_respondientes (idGrua, idSiniestro) VALUES (@idGrua, @idSiniestro);');
 
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});
         } catch (error){
@@ -42,74 +36,62 @@ export const createCorralon = async (req,res) => {
     } else {
         return res.status(HTTP_STATUS.BAD_REQUEST)
                 .json({msg:MESSAGES.BAD_REQUEST, content: {
-                    "idRegion": idRegion, 
-                    "razonSocial": razonSocial,
-                    "direccion": direccion,
-                    "latitud": latitud,
-                    "longitud": longitud,
-                    "diasHabiles": diasHabiles,
-                    "responsable": responsable,
-                    "telefono": telefono
+                    "idGrua": idGrua, 
+                    "idSiniestro": idSiniestro
                     }
                 });
     }    
 }
 
-export const getCorralonById = async (req,res) => {
-    const { idCorralon } = req.params;
-    if (idCorralon){
+export const getGruaRespondienteById = async (req,res) => {
+    const { id } = req.params;
+    if (id){
         try {
             const pool = await getConection();
 
             const result = await pool.request()
-            .input("idCorralon", sql.Int, idCorralon)
-            .query('SELECT c.idCorralon, c.razonSocial, c.idRegion, r.nombre as nombre_region, c.direccion, c.latitud, c.longitud, c.diasHabiles, c.responsable, c.telefono FROM corralon as c LEFT JOIN region as r ON c.idRegion = r.idRegion WHERE c.idCorralon = @idCorralon;')
+            .input("id", sql.Int, id)
+            .query('SELECT gr.id, gr.idGrua, g.matricula as matricula_grua, gr.idSiniestro, s.folio as folio_siniestro FROM gruas_respondientes AS gr LEFT JOIN grua AS g ON gr.idGrua = g.idGrua LEFT JOIN siniestro AS s ON gr.idSiniestro = s.idSiniestro WHERE id = @id')
 
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset})
         } catch (error) {
             return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR, error})
         }
     } else {
-        return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST, content: {'idCorralon': idCorralon}})
+        return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST, content: {'id': id || ''}})
     }
 }
 
-export const deleteCorralonById = async (req,res) => {
-    const { idCorralon } = req.params;
-    if (idCorralon){
+export const deleteGruaRespondienteById = async (req,res) => {
+    const { id } = req.params;
+    if (id){
         try {
             const pool = await getConection();
             await pool.request()
-            .input("idCorralon", sql.Int, idCorralon)
-            .query('DELETE FROM corralon WHERE idCorralon = @idCorralon')
+            .input("id", sql.Int, id)
+            .query('DELETE FROM gruas_respondientes WHERE id = @id')
 
             return res.status(HTTP_STATUS.DELETE_SUCCES)
         } catch (error) {
             return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR, error})
         }
     } else {
-        return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST, content: {'idCorralon': idCorralon}})
+        return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST, content: {'id': id || ''}})
     }
 }
 
-export const updateCorralonById = async (req,res) => {
-    const { idCorralon } = req.params;
-    const { idRegion, razonSocial, direccion, latitud, longitud, diasHabiles, responsable, telefono } = req.body;
+export const updateGruaRespondienteById = async (req,res) => {
+    const { id } = req.params;
+    const { idGrua, idSiniestro } = req.body;
     
-    if (idCorralon && idRegion && razonSocial && direccion && latitud && longitud && diasHabiles && responsable && telefono) {
+    if (id && idGrua && idSiniestro) {
         try {
             const pool = await getConection();
             await pool.request()
-            .input('idRegion', sql.Int, idRegion)
-            .input('razonSocial', sql.VarChar, razonSocial)
-            .input('direccion', sql.VarChar, direccion)
-            .input('latitud', sql.VarChar, latitud)
-            .input('longitud', sql.VarChar, longitud)
-            .input('diasHabiles', sql.VarChar, diasHabiles)
-            .input('responsable', sql.VarChar, responsable)
-            .input('telefono', sql.VarChar, telefono)
-            .input('idCorralon', sql.Int, idCorralon)
-            .query('UPDATE corralon SET idRegion = @idRegion, razonSocial = @razonSocial, direccion = @direccion, latitud = @latitud, longitud = @longitud, diasHabiles = @diasHabiles, responsable = @responsable, telefono = @telefono WHERE idCorralon = @idCorralon;');
+            .input('idGrua', sql.Int, idGrua)
+            .input('idSiniestro', sql.Int, idSiniestro)
+            .input('id', sql.Int, id)
+            .query('UPDATE gruas_respondientes SET idGrua = @idGrua, idSiniestro = @idSiniestro WHERE id = @id;');
         
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});
         } catch (error) {
@@ -118,14 +100,9 @@ export const updateCorralonById = async (req,res) => {
     } else {
         return res.status(HTTP_STATUS.BAD_REQUEST)
         .json({msg: MESSAGES.BAD_REQUEST, content: {
-                "idRegion": idRegion,
-                "razonSocial": razonSocial,
-                "direccion": direccion,
-                "latitud": latitud,
-                "longitud": longitud,
-                "diasHabiles": diasHabiles,
-                "responsable": responsable,
-                "telefono": telefono
+                "id": id || '',
+                "idGrua": idGrua,
+                "idSiniestro": idSiniestro
             }
         })
     }

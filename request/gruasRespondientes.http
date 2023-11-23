@@ -9,25 +9,22 @@ POST {{api}}/create
 Content-Type: application/json
 
 {
-    "idCorralon": 2,
-    "idGruaTipo": 1,
-    "matricula": ""
+    "idGrua": 3,
+    "idSiniestro": 1
 }
 
 ### LISTAR POR ID
-GET {{api}}/getbid/
+GET {{api}}/getbid/2
 
 ### ELIMINAR POR ID
-DELETE {{api}}/delete/1
+DELETE {{api}}/delete/4
 
 
 ### EDITAR POR ID
-PUT {{api}}/update/3
+PUT {{api}}/update/2
 Content-Type: application/json
 
 {
     "idGrua": 3,
-    "idCorralon":1,
-    "idGruaTipo": 3,
-    "matricula": "das87asd"
+    "idSiniestro": 1
 }
