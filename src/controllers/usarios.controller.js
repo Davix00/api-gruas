@@ -1,8 +1,6 @@
 import { getConection, sql} from '../database/conection'
 import {HTTP_STATUS, MESSAGES} from '../database/status'
 
-
-//querys
 export const getUsuarios = async (req, res) => {
     try {
         const pool = await getConection();
@@ -26,11 +24,11 @@ export const createUsuario = async (req, res) => {
             const pool = await getConection();
 
             await pool.request()
-            .input('idUsuarioTipo',sql.Int,idUsuarioTipo)
-            .input('nombre',sql.VarChar,nombre)
-            .input('apellido',sql.VarChar,apellido)
-            .input('nombreDeUsuario',sql.VarChar,nombreDeUsuario)
-            .input('contrasena',sql.VarChar,contrasena)
+            .input('idUsuarioTipo', sql.Int, idUsuarioTipo)
+            .input('nombre', sql.VarChar, nombre)
+            .input('apellido', sql.VarChar, apellido)
+            .input('nombreDeUsuario', sql.VarChar, nombreDeUsuario)
+            .input('contrasena', sql.VarChar, contrasena)
             .query('INSERT INTO usuario (idUsuarioTipo, nombre, apellido, nombreDeUsuario, contrasena) VALUES (@idUsuarioTipo, @nombre, @apellido, @nombreDeUsuario, @contrasena);');
             
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});
@@ -49,7 +47,7 @@ export const getUsuarioById = async (req, res) => {
             const pool = await getConection();
 
             const result = await pool.request()
-            .input('idUsuario',sql.Int,idUsuario)
+            .input('idUsuario', sql.Int,idUsuario)
             .query('SELECT u.idUsuario, u.nombre, u.apellido, u.nombreDeUsuario, u.contrasena, ut.nombre AS tipo FROM usuario AS u LEFT JOIN usuario_tipo AS ut ON u.idUsuarioTipo = ut.idUsuarioTipo WHERE idUsuario = @idUsuario;');
             if(result.recordset[0]){
                 return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset[0]});   
@@ -70,7 +68,7 @@ export const deleteUsuario = async (req,res) => {
             const pool = await getConection();
 
             await pool.request()
-            .input('idUsuario',sql.Int,idUsuario)
+            .input('idUsuario', sql.Int, idUsuario)
             .query('DELETE FROM usuario WHERE idUsuario = @idUsuario;');
             return res.status(HTTP_STATUS.DELETE_SUCCES);   
         } catch (error) {

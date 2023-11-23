@@ -3,6 +3,7 @@ import config from './config'
 
 //rutas de apis
 import usuariosRoutes from './routes/usuarios.routes'
+import gruasRoutes from './routes/gruas.routes'
 
 const app = express()
 
@@ -14,5 +15,5 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 app.use(usuariosRoutes)
-
+app.use(gruasRoutes)
 export default app;
