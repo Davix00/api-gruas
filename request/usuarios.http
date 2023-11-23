@@ -1,0 +1,38 @@
+### LINK DE LA API DE USUARIOS
+@api = http://localhost:3001/usuarios
+
+### LISTAR
+GET {{api}}/get
+
+### CREAR
+POST {{api}}/create
+Content-Type: application/json
+
+{
+    "idUsuarioTipo": 2,
+    "nombre": "Kenia",
+    "apellido": "Galaviz",
+    "nombreDeUsuario": "kenia@puebla.movilidad.mx",
+    "contrasena": "holaa1aaa"
+}
+
+### LISTAR POR ID
+GET {{api}}/getbid/24
+
+### ELIMINAR POR ID
+DELETE {{api}}/delete/23
+
+### CONTAR
+GET {{api}}/count
+
+### EDITAR
+PUT {{api}}/update/24
+Content-Type: application/json
+
+{
+    "idUsuarioTipo": 1,
+    "nombre": "Max Steel",
+    "apellido": "Cubas",
+    "nombreDeUsuario": "max@puebla.movilidad.mx",
+    "contrasena": "kalimba225465"
+}

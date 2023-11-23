@@ -1,0 +1,33 @@
+### LINK DE LA API DE USUARIOS
+@api = http://localhost:3001/gruas
+
+### LISTAR
+GET {{api}}/get
+
+### CREAR
+POST {{api}}/create
+Content-Type: application/json
+
+{
+    "idCorralon": 2,
+    "idGruaTipo": 1,
+    "matricula": "das66asd"
+}
+
+### LISTAR POR ID
+GET {{api}}/getbid/3
+
+### ELIMINAR POR ID
+DELETE {{api}}/delete/4
+
+
+### EDITAR
+PUT {{api}}/update/3
+Content-Type: application/json
+
+{
+    "idGrua": 3,
+    "idCorralon":1,
+    "idGruaTipo": 3,
+    "matricula": "das87asd"
+}
