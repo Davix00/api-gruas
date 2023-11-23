@@ -1,5 +1,5 @@
-### LINK DE LA API DE GRUAS
-@api = http://localhost:3001/gruas
+### LINK DE LA API DE GRUAS RESPONDIENTES
+@api = http://localhost:3001/gruasrespondientes
 
 ### LISTAR
 GET {{api}}/get

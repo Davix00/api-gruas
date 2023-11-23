@@ -1,5 +1,5 @@
-import { getConection, sql} from '../database/conection'
-import {HTTP_STATUS, MESSAGES} from '../database/status'
+import { getConection, sql} from '../database/conection';
+import { HTTP_STATUS, MESSAGES } from '../database/status';
 
 export const getUsuarios = async (req, res) => {
     try {

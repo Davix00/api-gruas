@@ -1,4 +1,4 @@
-import {Router} from 'express'
+import { Router } from 'express'
 import {getUsuarios, createUsuario, getUsuarioById, deleteUsuario, countUsuarios, updateUsuarioById} from '../controllers/usarios.controller'
 
 const router = Router()

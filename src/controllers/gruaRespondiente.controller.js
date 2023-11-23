@@ -1,12 +1,12 @@
 import { getConection, sql } from "../database/conection";
 import { HTTP_STATUS, MESSAGES } from "../database/status";
 
-export const getCorralones = async (req,res) => {
+export const getGruasRespondientes = async (req,res) => {
     try {
         const pool = await getConection();
 
         const result = await pool.request()
-        .query('SELECT c.idCorralon, c.razonSocial, c.idRegion, r.nombre as nombre_region, c.direccion, c.latitud, c.longitud, c.diasHabiles, c.responsable, c.telefono FROM corralon as c LEFT JOIN region as r ON c.idRegion = r.idRegion');
+        .query('SELECT gr.idGrua, g.matricula, gr.idSiniestro, s.folio FROM gruas_respondientes AS gr LEFT JOIN grua AS g ON gr.idGrua = g.idGrua LEFT JOIN siniestro AS s ON gr.idSiniestro = s.idSiniestro');
 
         if (result.recordset){
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset});
