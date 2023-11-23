@@ -6,6 +6,7 @@ import usuariosRoutes from './routes/usuarios.routes'
 import gruasRoutes from './routes/gruas.routes'
 import corralonRoutes from './routes/corralon.routes'
 import gruasRespondientesRoutes from './routes/gruasRespondientes.routes'
+import maniobraRoutes from './routes/maniobra.routes'
 
 const app = express()
 
@@ -20,5 +21,6 @@ app.use(usuariosRoutes)
 app.use(gruasRoutes)
 app.use(corralonRoutes)
 app.use(gruasRespondientesRoutes)
+app.use(maniobraRoutes)
 
 export default app;

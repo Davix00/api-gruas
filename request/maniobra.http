@@ -1,0 +1,29 @@
+### LINK DE LA API DE MANIOBRA
+@api = http://localhost:3001/maniobra
+
+### LISTAR
+GET {{api}}/get
+
+### CREAR
+POST {{api}}/create
+Content-Type: application/json
+
+{
+    "nombre": "Levantamiento",
+    "precio": 150.0
+}
+
+### LISTAR POR ID
+GET {{api}}/getbid/3
+
+### ELIMINAR POR ID
+DELETE {{api}}/delete/3
+
+### EDITAR
+PUT {{api}}/update/3
+Content-Type: application/json
+
+{
+    "nombre": "levantamiento",
+    "precio": 160.0
+}
