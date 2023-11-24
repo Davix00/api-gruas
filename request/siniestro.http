@@ -1,0 +1,31 @@
+### LINK DE LA API DE USUARIOS
+@api = http://localhost:3001/siniestro
+
+### LISTAR
+GET {{api}}/get
+
+### CREAR
+POST {{api}}/create
+Content-Type: application/json
+
+{
+      "idReportador": 1,
+      "direccion": "Calle 5 de mayo 4601 colonia Moctezuma, Pueb."
+}
+
+### LISTAR POR ID
+GET {{api}}/getbid/1
+
+### ELIMINAR POR ID
+DELETE {{api}}/delete/23
+
+
+### EDITAR
+PUT {{api}}/update/1
+Content-Type: application/json
+
+{
+      "idReportador": 2,
+      "direccion": "Calle 5 de mayo 601 colonia Moctezuma, Pueb.",
+      "folio": "smv-acc23111"
+}

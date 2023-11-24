@@ -1,0 +1,34 @@
+### LINK DE LA API DE USUARIOS
+@api = http://localhost:3001/operador
+
+### LISTAR
+GET {{api}}/get
+
+### CREAR
+POST {{api}}/create
+Content-Type: application/json
+
+{
+      "idGrua": 2,
+      "nombre": "Ricardo Sanchez",
+      "telefono": "2224009708",
+      "numeroLicencia": "809093123"
+}
+
+### LISTAR POR ID
+GET {{api}}/getbid/3
+
+### ELIMINAR POR ID
+DELETE {{api}}/delete/3
+
+
+### EDITAR
+PUT {{api}}/update/4
+Content-Type: application/json
+
+{
+      "idGrua": 2,
+      "nombre": "Ricardo Del Nilo",
+      "telefono": "2224009708",
+      "numeroLicencia": "809093123"
+}

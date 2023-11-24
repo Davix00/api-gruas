@@ -8,7 +8,8 @@ import corralonRoutes from './routes/corralon.routes'
 import gruasRespondientesRoutes from './routes/gruasRespondientes.routes'
 import maniobraRoutes from './routes/maniobra.routes'
 import maniobrasUtilizadasRoutes from './routes/maniobrasUtilizadas.routes'
-
+import operadorRoutes from './routes/operador.routes'
+import siniestroRouter from './routes/siniestro.routes'
 
 const app = express()
 
@@ -25,5 +26,7 @@ app.use(corralonRoutes)
 app.use(gruasRespondientesRoutes)
 app.use(maniobraRoutes)
 app.use(maniobrasUtilizadasRoutes)
+app.use(operadorRoutes)
+app.use(siniestroRouter)
 
 export default app;
