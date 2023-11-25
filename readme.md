@@ -69,5 +69,6 @@ Los datos del .env deben ser correspondientes a tu SQlServer.
 Las rutas de las apis se encuentran dentro de la carpeta request donde cada modelo tiene sus rutas especificas y el uso de la mismas.
 Para poder ocuparlas con los archivos .http use la extención REST Client.
 
+![GIF API USE](public/sample_api_use.gif)
 
 
