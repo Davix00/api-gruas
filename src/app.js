@@ -12,6 +12,7 @@ import maniobrasUtilizadasRoutes from './routes/maniobrasUtilizadas.routes'
 import operadorRoutes from './routes/operador.routes'
 import siniestroRouter from './routes/siniestro.routes'
 import vehiculoTipoRouter from './routes/vehiculosTipos.routes'
+import vehiculoRouter from './routes/vehiculos.routes'
 
 const app = express()
 
@@ -32,5 +33,6 @@ app.use(maniobrasUtilizadasRoutes)
 app.use(operadorRoutes)
 app.use(siniestroRouter)
 app.use(vehiculoTipoRouter)
+app.use(vehiculoRouter)
 
 export default app;

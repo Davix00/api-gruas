@@ -1,0 +1,41 @@
+### LINK DE LA API DE VEHICULO TIPO
+@api = http://localhost:3001/vehiculo
+
+### LISTAR
+GET {{api}}/get
+
+### CREAR
+POST {{api}}/create
+Content-Type: application/json
+
+{
+    "idSiniestro": 1,
+    "idCorralon": 2,
+    "idVehiculoTipo": 4,
+    "matricula": "PO12HU34Y1",
+    "matriculaEstado": "Puebla",
+    "modelo": "Sentra",
+    "marca": "Nissan",
+    "color": "azul"
+}
+
+### LISTAR POR ID
+GET {{api}}/getbid/4
+
+### ELIMINAR POR ID
+DELETE {{api}}/delete/4
+
+### EDITAR
+PUT {{api}}/update/1
+Content-Type: application/json
+
+{
+    "idSiniestro": 1,
+    "idCorralon": 2,
+    "idVehiculoTipo": 1,
+    "matricula": "1d14f1pa07",
+    "matriculaEstado": "morelos",
+    "modelo": "Jetta",
+    "marca": "VW",
+    "color": "rojo"
+}

@@ -41,8 +41,8 @@ export const createSiniestro = async (req,res) => {
     } else {
         return res.status(HTTP_STATUS.BAD_REQUEST)
                 .json({msg:MESSAGES.BAD_REQUEST, content: {
-                    "idReportador": idReportador,
-                    "direccion": telefono
+                        "idReportador": idReportador,
+                        "direccion": telefono
                     }
                 });
     }    
