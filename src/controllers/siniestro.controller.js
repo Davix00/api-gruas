@@ -29,7 +29,6 @@ export const createSiniestro = async (req,res) => {
             const siniestro = await sql.query`SELECT COUNT(*) as siniestros FROM siniestro;`;
             const folio = formato + (siniestro.recordset[0].siniestros + 1);
 
-
             await pool.request()
             .input('idReportador', sql.Int, idReportador)
             .input('folio', sql.VarChar, folio)

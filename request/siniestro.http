@@ -14,10 +14,10 @@ Content-Type: application/json
 }
 
 ### LISTAR POR ID
-GET {{api}}/getbid/1
+GET {{api}}/getbid/2
 
 ### ELIMINAR POR ID
-DELETE {{api}}/delete/23
+DELETE {{api}}/delete/2
 
 
 ### EDITAR
