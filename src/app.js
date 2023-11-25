@@ -1,5 +1,6 @@
 import express from 'express'
 import config from './config'
+import cors from 'cors'
 
 //rutas de apis
 import usuariosRoutes from './routes/usuarios.routes'
@@ -19,6 +20,7 @@ app.set('port', config.port)
 //middlewarse
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use(cors()) //permitimos el llamado de nuestras rutas de cualquier parte
 
 app.use(usuariosRoutes)
 app.use(gruasRoutes)

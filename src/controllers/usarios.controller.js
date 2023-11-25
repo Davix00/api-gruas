@@ -126,9 +126,9 @@ export const login = async (req,res) => {
             const pool = await getConection();
 
             const result = await pool.request()
-            .input('nombreDeUsuario', sql.Int,nombreDeUsuario)
-            .input('contrasena', sql.Int,contrasena)
-            .query('SELECT u.idUsuario, u.nombre, u.apellido, u.nombreDeUsuario, u.contrasena, ut.nombre AS tipo FROM usuario AS u LEFT JOIN usuario_tipo AS ut ON u.idUsuarioTipo = ut.idUsuarioTipo WHERE nombreDeUsuari = @nombreDeUsuario AND contrasena = @contrasena;');
+            .input('nombreDeUsuario', sql.VarChar, nombreDeUsuario)
+            .input('contrasena', sql.VarChar, contrasena)
+            .query('SELECT u.nombre, u.apellido, u.nombreDeUsuario, ut.nombre AS tipo FROM usuario AS u LEFT JOIN usuario_tipo AS ut ON u.idUsuarioTipo = ut.idUsuarioTipo WHERE nombreDeUsuario = @nombreDeUsuario AND contrasena = @contrasena;');
             if(result.recordset[0]){
                 return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset[0]});   
             }

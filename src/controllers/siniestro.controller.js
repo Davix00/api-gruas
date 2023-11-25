@@ -93,11 +93,10 @@ export const updateSiniestrorById = async (req,res) => {
         try {
             const pool = await getConection();
             await pool.request()
-            .input('idReportador', sql.Int, idReportador)
             .input('direccion', sql.VarChar, direccion)
             .input('folio', sql.VarChar, folio)
             .input('idSiniestro', sql.Int, idSiniestro)
-            .query('UPDATE siniestro SET idReportador = @idReportador, direccion = @direccion, folio = @folio WHERE idSiniestro = @idSiniestro;');
+            .query('UPDATE siniestro SET direccion = @direccion, folio = @folio WHERE idSiniestro = @idSiniestro;');
         
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});
         } catch (error) {
