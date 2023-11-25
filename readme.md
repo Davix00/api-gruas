@@ -52,7 +52,7 @@ Los datos del .env deben ser correspondientes a tu SQlServer.
 
 ¡Como tip use el SSMS para que todo sea mas fácil!
 
-1. Tienes que restaurar el archivo .bak donde contiene la base de datos para ello puedes consultar la documentación oficial: [Restaurar una base de datos con archivos .bak][3]
+1. Tienes que restaurar el archivo .bak que se encuntra en la carpeta database donde contiene la base de datos para ello puedes consultar la documentación oficial: [Restaurar una base de datos con archivos .bak][3]
 
 [3]: https://learn.microsoft.com/es-es/sql/relational-databases/backup-restore/restore-a-database-backup-using-ssms?view=sql-server-ver16#examples
 
