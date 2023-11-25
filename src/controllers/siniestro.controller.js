@@ -87,9 +87,9 @@ export const deleteSiniestroById = async (req,res) => {
 
 export const updateSiniestrorById = async (req,res) => {
     const { idSiniestro } = req.params;
-    const { idReportador, direccion, folio } = req.body;
+    const { direccion, folio } = req.body;
     
-    if (idSiniestro && idReportador && direccion && folio) {
+    if (idSiniestro && direccion && folio) {
         try {
             const pool = await getConection();
             await pool.request()
@@ -106,9 +106,8 @@ export const updateSiniestrorById = async (req,res) => {
         return res.status(HTTP_STATUS.BAD_REQUEST)
         .json({msg: MESSAGES.BAD_REQUEST, content: {
                 "idSiniestro": idSiniestro,
-                "idReportador": idReportador,
                 "direccion": direccion,
-                "folio": folio,
+                "folio": folio
             }
         })
     }

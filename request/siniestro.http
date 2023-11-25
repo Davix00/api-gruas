@@ -19,7 +19,7 @@ GET {{api}}/getbid/1
 ### ELIMINAR POR ID
 DELETE {{api}}/delete/2
 
-
+ 
 ### EDITAR
 PUT {{api}}/update/1
 Content-Type: application/json

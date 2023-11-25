@@ -36,7 +36,15 @@ export const createUsuario = async (req, res) => {
             return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR,error});
         }
     } else {
-        return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST,  content: {"idUsuarioTipo": idUsuarioTipo }});
+        return res.status(HTTP_STATUS.BAD_REQUEST)
+        .json({msg: MESSAGES.BAD_REQUEST,  content: {
+            "idUsuarioTipo": idUsuarioTipo,
+            "nombre": nombre,
+            "apellido": apellido,
+            "nombreDeUsuario": nombreDeUsuario,
+            "contrasena": contrasena 
+            }
+        });
     }     
 };
 
@@ -75,12 +83,11 @@ export const deleteUsuario = async (req,res) => {
             return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR, error});
         }
     } else {
-        return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST});
+        return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST, content: {"idusuario": idUsuario || ''}});
     }
 };
 
 export const countUsuarios = async (req, res) => {
-
     try {
         const pool = await getConection();
         const result = await pool.request()
@@ -115,7 +122,16 @@ export const updateUsuarioById = async (req, res) => {
             return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR,error});
         }
     } else {
-        return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST});
+        return res.status(HTTP_STATUS.BAD_REQUEST).
+        json({msg: MESSAGES.BAD_REQUEST, content:{
+                "idUsuarioTipo": idUsuarioTipo,
+                "nombre": nombre,
+                "apellido": apellido,
+                "nombreDeUsario": nombreDeUsuario,
+                "idUsuario": idUsuario,
+                "contrasena": contrasena
+            }
+        });
     } 
 };
 
@@ -137,6 +153,11 @@ export const login = async (req,res) => {
             return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR, error});
         }
     } else {
-        return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST});
+        return res.status(HTTP_STATUS.BAD_REQUEST)
+        .json({msg: MESSAGES.BAD_REQUEST, content: {
+                "nombreDeUsuario": nombreDeUsuario,
+                "contrasena": contrasena
+            }
+        });
     }
 }

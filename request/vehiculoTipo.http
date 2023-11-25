@@ -1,0 +1,29 @@
+### LINK DE LA API DE USUARIOS
+@api = http://localhost:3001/vehiculot
+
+### LISTAR
+GET {{api}}/get
+
+### CREAR
+POST {{api}}/create
+Content-Type: application/json
+
+{
+    "nombre": "camioneta",
+    "precio": 60
+}
+
+### LISTAR POR ID
+GET {{api}}/getbid/3
+
+### ELIMINAR POR ID
+DELETE {{api}}/delete/3
+
+### EDITAR
+PUT {{api}}/update/3
+Content-Type: application/json
+
+{
+    "nombre": "camioneta",
+    "precio": 50
+}
