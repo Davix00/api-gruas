@@ -36,3 +36,6 @@ Content-Type: application/json
     "nombreDeUsuario": "max@puebla.movilidad.mx",
     "contrasena": "kalimba225465"
 }
+
+## COMPROBAR LOGIN
+GET {{api}}/login/max@puebla.movilidad.mx/kalimba225465

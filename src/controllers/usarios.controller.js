@@ -36,7 +36,7 @@ export const createUsuario = async (req, res) => {
             return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR,error});
         }
     } else {
-        return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST});
+        return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST,  content: {"idUsuarioTipo": idUsuarioTipo }});
     }     
 };
 
@@ -57,7 +57,7 @@ export const getUsuarioById = async (req, res) => {
             return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR, error});
         }
     } else {
-        return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST});
+        return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST, content: {"idUsuario": idUsuario || ''}});
     }
 };
 
@@ -118,3 +118,25 @@ export const updateUsuarioById = async (req, res) => {
         return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST});
     } 
 };
+
+export const login = async (req,res) => {
+    const { nombreDeUsuario, contrasena } = req.params
+    if(nombreDeUsuario && contrasena){
+        try {
+            const pool = await getConection();
+
+            const result = await pool.request()
+            .input('nombreDeUsuario', sql.Int,nombreDeUsuario)
+            .input('contrasena', sql.Int,contrasena)
+            .query('SELECT u.idUsuario, u.nombre, u.apellido, u.nombreDeUsuario, u.contrasena, ut.nombre AS tipo FROM usuario AS u LEFT JOIN usuario_tipo AS ut ON u.idUsuarioTipo = ut.idUsuarioTipo WHERE nombreDeUsuari = @nombreDeUsuario AND contrasena = @contrasena;');
+            if(result.recordset[0]){
+                return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset[0]});   
+            }
+            return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: ''});   
+        } catch (error) {
+            return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR, error});
+        }
+    } else {
+        return res.status(HTTP_STATUS.BAD_REQUEST).json({msg: MESSAGES.BAD_REQUEST});
+    }
+}
