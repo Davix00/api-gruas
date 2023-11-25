@@ -6,7 +6,7 @@ export const getCorralones = async (req,res) => {
         const pool = await getConection();
 
         const result = await pool.request()
-        .query('SELECT c.idCorralon, c.razonSocial, c.idRegion, r.nombre as nombre_region, c.direccion, c.latitud, c.longitud, c.diasHabiles, c.responsable, c.telefono FROM corralon as c LEFT JOIN region as r ON c.idRegion = r.idRegion');
+        .query('SELECT c.idCorralon, c.razonSocial, c.idRegion, r.nombre as nombre_region, c.direccion, CONVERT(FLOAT,c.latitud) AS latitud, CONVERT(FLOAT,c.longitud) AS longitud, c.diasHabiles, c.responsable, c.telefono FROM corralon as c LEFT JOIN region as r ON c.idRegion = r.idRegion;');
 
         if (result.recordset){
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset});
@@ -63,7 +63,7 @@ export const getCorralonById = async (req,res) => {
 
             const result = await pool.request()
             .input("idCorralon", sql.Int, idCorralon)
-            .query('SELECT c.idCorralon, c.razonSocial, c.idRegion, r.nombre as nombre_region, c.direccion, c.latitud, c.longitud, c.diasHabiles, c.responsable, c.telefono FROM corralon as c LEFT JOIN region as r ON c.idRegion = r.idRegion WHERE c.idCorralon = @idCorralon;')
+            .query('SELECT c.idCorralon, c.razonSocial, c.idRegion, r.nombre as nombre_region, c.direccion, CONVERT(FLOAT,c.latitud) AS latitud, CONVERT(FLOAT,c.longitud) AS longitud, c.diasHabiles, c.responsable, c.telefono FROM corralon as c LEFT JOIN region as r ON c.idRegion = r.idRegion WHERE c.idCorralon = @idCorralon;')
 
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset})
         } catch (error) {
