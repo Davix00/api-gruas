@@ -22,7 +22,7 @@ app.set('port', config.port)
 //middlewarse
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(cors()) //permitimos el llamado de nuestras rutas de cualquier parte
+app.use(cors()) //permitimos el llamado de nuestras apis de cualquier parte
 
 app.use(usuariosRoutes)
 app.use(gruasRoutes)

@@ -9,8 +9,7 @@ POST {{api}}/create
 Content-Type: application/json
 
 {
-      "idReportador": 1,
-      "direccion": "Calle 5 de mayo 4601 colonia Moctezuma, Pueb."
+      "direccion": "Calle Rio Grijalva colonia La Paya 346 Puebla"
 }
 
 ### LISTAR POR ID

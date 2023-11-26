@@ -19,8 +19,8 @@ export const getSiniestro = async (req,res) => {
 }
 
 export const createSiniestro = async (req,res) => {
-    const { idReportador, direccion } = req.body;
-    if (idReportador && direccion) {
+    const {direccion } = req.body;
+    if (direccion) {
         try {
             const pool = await getConection();
 
@@ -30,10 +30,9 @@ export const createSiniestro = async (req,res) => {
             const folio = formato + (siniestro.recordset[0].siniestros + 1);
 
             await pool.request()
-            .input('idReportador', sql.Int, idReportador)
             .input('folio', sql.VarChar, folio)
             .input('direccion', sql.VarChar, direccion)
-            .query('INSERT INTO siniestro (idReportador, folio, direccion, fecha) VALUES (@idReportador, @folio, @direccion, SYSDATETIME());');
+            .query('INSERT INTO siniestro (folio, direccion, fecha) VALUES (@folio, @direccion, SYSDATETIME());');
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});
         } catch (error){
             return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg:MESSAGES.DATABASE_ERROR, error})
@@ -41,7 +40,6 @@ export const createSiniestro = async (req,res) => {
     } else {
         return res.status(HTTP_STATUS.BAD_REQUEST)
                 .json({msg:MESSAGES.BAD_REQUEST, content: {
-                        "idReportador": idReportador,
                         "direccion": telefono
                     }
                 });

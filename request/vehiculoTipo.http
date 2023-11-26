@@ -9,15 +9,15 @@ POST {{api}}/create
 Content-Type: application/json
 
 {
-    "nombre": "camioneta",
-    "precio": 60
+    "nombre": "motocicleta",
+    "precio": 70
 }
 
 ### LISTAR POR ID
 GET {{api}}/getbid/3
 
 ### ELIMINAR POR ID
-DELETE {{api}}/delete/3
+DELETE {{api}}/delete/8
 
 ### EDITAR
 PUT {{api}}/update/3
